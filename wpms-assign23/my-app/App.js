@@ -5,21 +5,13 @@ import List from './components/List';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <List />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+      <>
+        <Navigator></Navigator>
+        <StatusBar style="auto"/>
+      </>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? 30 : 0,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
 
 export default App;
