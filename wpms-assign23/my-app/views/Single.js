@@ -13,7 +13,6 @@ const Single = ({route, navigation}) => {
     user_id: userId,
     filesize,
   } = route.params;
-  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{title}</Text>

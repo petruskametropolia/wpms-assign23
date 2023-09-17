@@ -12,9 +12,11 @@ const useMedia = () => {
       const mediaFiles = await Promise.all(
         json.map(async (item) => {
           const fileData = await doFetch(apiUrl + 'media/' + item.file_id);
+          // console.log('fileData', fileData);
           return fileData;
         }),
       );
+      // console.log(data);
       setMediaArray(mediaFiles);
     } catch (error) {
       console.error('loadMedia failed', error);
@@ -70,4 +72,15 @@ const useUser = () => {
   return {getUserByToken, postUser};
 };
 
-export {useMedia, useAuthentication, useUser};
+const useTag = () => {
+  const getFilesByTag = async (tag) => {
+    try {
+      return await doFetch(apiUrl + 'tags/' + tag);
+    } catch (error) {
+      throw new Error('getFilesByTag error', error.message);
+    }
+  };
+  return {getFilesByTag};
+};
+
+export {useMedia, useAuthentication, useUser, useTag};
