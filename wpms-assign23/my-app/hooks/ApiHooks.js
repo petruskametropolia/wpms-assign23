@@ -1,15 +1,19 @@
 import {useEffect, useState} from 'react';
-import {apiUrl} from '../utils/app-config';
+import {apiUrl, appId} from '../utils/app-config';
 import {doFetch} from '../utils/functions';
 import {error} from '@babel/eslint-parser/lib/convert/index.cjs';
 
-const useMedia = () => {
+const useMedia = (update) => {
   const [mediaArray, setMediaArray] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadMedia = async () => {
     try {
-      const json = await doFetch(apiUrl + 'media');
-  
+      // all mediafiles
+      // const json = await doFetch(apiUrl + 'media');
+      // files with specific appId
+      const json = await doFetch(apiUrl + 'tags/' + appId);
+ 
       const mediaFiles = await Promise.all(
         json.map(async (item) => {
           const fileData = await doFetch(apiUrl + 'media/' + item.file_id);
@@ -24,9 +28,28 @@ const useMedia = () => {
 
   useEffect(() => {
     loadMedia();
-  }, []);
+  }, [update]);
 
-  return {mediaArray};
+  const postMedia = async (mediaData, token) => {
+    setLoading(true);
+    try {
+      const options = {
+        method: 'POST',
+        headers: {
+          'x-access-token': token,
+        },
+        body: mediaData,
+      };
+      const uploadResult = await doFetch(apiUrl + 'media', options);
+      return uploadResult;
+    } catch (error) {
+      throw new Error('postMedia failed: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {mediaArray, postMedia, loading};
 };
 
 const useAuthentication = () => {
@@ -88,6 +111,18 @@ const useUser = () => {
 };
 
 const useTag = () => {
+  const postTag = async (tag, token) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      body: JSON.stringify(tag),
+    };
+    return await doFetch(apiUrl + 'tags', options);
+  };
+
   const getFilesByTag = async (tag) => {
     try {
       return await doFetch(apiUrl + 'tags/' + tag);
@@ -95,7 +130,7 @@ const useTag = () => {
       throw new Error('getFilesByTag error', error.message);
     }
   };
-  return {getFilesByTag};
+  return {postTag, getFilesByTag};
 };
 
 export {useMedia, useAuthentication, useUser, useTag};
