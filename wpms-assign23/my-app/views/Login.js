@@ -1,7 +1,5 @@
 import React, {useContext, useEffect} from 'react';
 import {
-  StyleSheet,
-  Text,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
@@ -46,24 +44,13 @@ const Login = ({navigation}) => { // props is needed for navigation
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
       >
-        <Text>Login</Text>
         <LoginForm />
         <RegisterForm />
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 Login.propTypes = {
   navigation: PropTypes.object,

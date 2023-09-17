@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, TextInput, Button } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import {Card, Text} from '@rneui/themed';
 
 const RegisterForm = () => {
   const {
@@ -13,7 +14,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <View>
+    <Card>
       <Controller
         control={control}
         rules={{
@@ -90,7 +91,7 @@ const RegisterForm = () => {
       />
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+    </Card>
   );
 };
 
