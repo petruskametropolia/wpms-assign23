@@ -38,4 +38,5 @@ const Navigator = () => {
     </NavigationContainer>
   );
 };
+
 export default Navigator;

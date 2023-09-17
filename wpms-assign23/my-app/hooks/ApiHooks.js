@@ -8,7 +8,7 @@ const useMedia = () => {
   const loadMedia = async () => {
     try {
       const json = await doFetch(apiUrl + 'media');
-
+    
       const mediaFiles = await Promise.all(
         json.map(async (item) => {
           const fileData = await doFetch(apiUrl + 'media/' + item.file_id);

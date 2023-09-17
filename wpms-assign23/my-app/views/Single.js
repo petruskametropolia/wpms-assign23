@@ -5,7 +5,6 @@ import {mediaUrl} from '../utils/app-config';
 import {formatDate} from '../utils/functions';
 
 const Single = ({route, navigation}) => {
-  // console.log('route params', route.params);
   const {
     title,
     description,
@@ -14,7 +13,7 @@ const Single = ({route, navigation}) => {
     user_id: userId,
     filesize,
   } = route.params;
-  // Show full image and metadata
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{title}</Text>
